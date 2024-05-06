@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Form</title>
+    <style>
+        body {
+            background-color: #000000;
+            margin: 0;
+        }
+        #container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #graybox {
+            background-color: #cccccc;
+            border-radius: 5px;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: center;
+            justify-content: center;
+        }
+        #input-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            width: 45%;
+        }
+        #label {
+            font-size: 1.2rem;
+            font-weight: bold;
+            width: 25%;
+            margin-right: 6px;
+            margin-left: 10px;
+        }
+        #input {
+            border: none;
+            border-radius: 5px;
+            padding: 5px;
+            flex-grow: 1;
+        }
+        #button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            margin-left: 30px;
+
+        }
+        #button {
+            background-color: #333333;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+        #button:hover {
+            background-color: #555555;
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <div id="graybox">
+        <div id="input-item">
+            <div id="label">Patient ID:</div>
+            <input type="text" id="input">
+        </div>
+        <div id="input-item">
+            <div id="label">Blood Type:</div>
+            <input type="text" id="input">
+        </div>
+        <div id="input-item">
+            <div id="label">First Name:</div>
+            <input type="text" id="input">
+        </div>
+        <div id="input-item">
+            <div id="label">Age:</div>
+            <input type="text" id="input">
+        </div>
+        <div id="input-item">
+            <div id="label">Last Name:</div>
+            <input type="text" id="input">
+        </div>
+        <div id="input-item">
+            <div id="label">Height:</div>
+            <input type="text" id="input">
+        </div>
+        <div id="input-item">
+            <div id="label">Gender:</div>
+            <input type="text" id="input">
+        </div>
+        <div id="input-item">
+            <div id="label">Weight:</div>
+            <input type="text" id="input">
+        </div>
+        <div id="button-container">
+            <a href="/"><button id="button">Back</button></a>
+            <a href="/page2.html"><button id="button">Next</button></a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

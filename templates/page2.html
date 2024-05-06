@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Add a black background to the body */
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Style the container and its children */
+       .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+       .left-section,
+       .right-section {
+            position: relative;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            width: 45%;
+            height: 400px; /* Add this line */
+        }
+
+        /* Style the buttons */
+        button {
+            background-color: #555;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #777;
+        }
+
+        /* Style the image container */
+        #image-container {
+            position: relative;
+            width: 100%;
+            padding-top: 60px;
+        }
+
+        #buttons-container {
+        position: absolute;
+        bottom: 20px; /* Adjust this value as needed */
+        width: calc(100% - 40px); /* Adjust to account for padding of the #right-section */
+    }
+
+        #image {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        /* Style the file upload container */
+       .upload-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+       .upload-container:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+       .border-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            flex-direction: column;
+            text-align: center;
+        }
+
+       .icons {
+            font-size: 3rem;
+            color: #ccc;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+       .icons:hover {
+            color: #fff;
+        }
+
+        #file-browser {
+            color: #fff;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        #file-browser:hover {
+            text-decoration: underline;
+        }
+
+        /* Style the input file */
+        input[type=file] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="container" class="container" method="post" enctype="multipart/form-data">
+        <div id="left-section" class="left-section">
+            <div class="upload-container">
+                <div class="border-container" onclick="document.getElementById('file-upload').click()">
+                    <div class="icons fa-4x">
+                        <i class="fas fa-file-image" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
+                        <i class="fas fa-file-alt" data-fa-transform="shrink-2 up-4"></i>
+                        <i class="fas fa-file-pdf" data-fa-transform="shrink-3 down-2 right-6 rotate-45"></i>
+                    </div>
+                    <p>Click here to upload a picture.</p>
+                </div>
+                <input type="file" name="file" id="file-upload" style="display: none;">
+            </div>
+            <div id="image-container">
+                <button id="rotate-button">Rotate</button>
+                <button id="zoom-in-button">Zoom In</button>
+                <button id="zoom-out-button">Zoom Out</button>
+            </div>
+        </div>
+        <div id="right-section" class="right-section" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h1>Diabetic 1</h1>
+            <div id="diabetic-box" ondragstart="dragStart(event)" draggable="true">Diabetic</div>
+            <div id="buttons-container">
+                <a href="/page1.html"><button id="back-button">Back</button></a>
+                <button id="save-button">Save Result</button>
+                
+                <button id="view-report-button" type="submit">View Report</button>
+            </div>
+            <!-- Add the provided code here -->
+            
+        </div>
+    
+        </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+        
+        function dragStart(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+        
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            ev.target.appendChild(document.getElementById(data));
+        }
+    
+        // Function to handle file input change event
+        document.getElementById('file-upload').onchange = function(e) {
+            var file = e.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                var img = new Image();
+                img.src = event.target.result;
+                img.onload = function() {
+                    var imageContainer = document.createElement('div');
+                    imageContainer.setAttribute('id', 'image-container');
+                    imageContainer.innerHTML = '<img id="uploaded-image" src="' + img.src + '" style="width: 100%; height: auto; max-width: 300px; max-height: 200px; border-radius: 10px;">';
+                    document.getElementById('diabetic-box').parentNode.insertBefore(imageContainer, document.getElementById('diabetic-box').nextSibling);
+                }
+            }
+            reader.readAsDataURL(file);
+        };
+    
+        // Function to rotate the image
+        document.getElementById('rotate-button').onclick = function() {
+            var uploadedImage = document.getElementById('uploaded-image');
+            var currentRotation = parseInt(uploadedImage.getAttribute('data-rotation')) || 0;
+            currentRotation += 90;
+            uploadedImage.style.transform = 'rotate(' + currentRotation + 'deg)';
+            uploadedImage.setAttribute('data-rotation', currentRotation);
+        };
+    
+        // Function to zoom in the image
+        document.getElementById('zoom-in-button').onclick = function() {
+            var uploadedImage = document.getElementById('uploaded-image');
+            var currentScale = parseFloat(uploadedImage.getAttribute('data-scale')) || 1;
+            currentScale += 0.1;
+            uploadedImage.style.transform = 'scale(' + currentScale + ')';
+            uploadedImage.setAttribute('data-scale', currentScale);
+        };
+    
+        // Function to zoom out the image
+        document.getElementById('zoom-out-button').onclick = function() {
+            var uploadedImage = document.getElementById('uploaded-image');
+            var currentScale = parseFloat(uploadedImage.getAttribute('data-scale')) || 1;
+            currentScale -= 0.1;
+            uploadedImage.style.transform = 'scale(' + currentScale + ')';
+            uploadedImage.setAttribute('data-scale', currentScale);
+        };
+    </script>
+    
+    
+</body>
+
+</html>
